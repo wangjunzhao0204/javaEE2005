@@ -39,7 +39,7 @@
                 <span id="search"></span>
             </div>
             <div id="user_bar">
-                <a href="user/showMyProfile">
+                <a href="${pageContext.request.contextPath}/user/showMyProfile">
                     <c:if test="${empty user.imgUrl}">
                         <img id="avatar" src="${pageContext.request.contextPath}/img/avatar_lg.png" alt="">
                     </c:if>
@@ -49,7 +49,7 @@
                     </c:if>
 
                 </a>
-                <a href="${pageContext.request.contextPath}/user/loginOut2" id="lay_out">退出</a>
+                <a href="${pageContext.request.contextPath}/user/loginOut" id="lay_out">退出</a>
             </div>
         </div>
     </menu>

@@ -33,4 +33,6 @@ public interface VideoMapper {
     int updateByPrimaryKeyWithBLOBs(Video record);
 
     int updateByPrimaryKey(Video record);
+
+    Video findByVideoId(Integer videoId);
 }

@@ -94,7 +94,7 @@
                       </c:if>
                        
                     </a>
-                    <a href="${pageContext.request.contextPath}/user/loginOut2" id="lay_out">退出</a>
+                    <a href="${pageContext.request.contextPath}/user/loginOut" id="lay_out">退出</a>
                 </div>
             </div>
         </menu>
@@ -135,6 +135,8 @@
                                 <div class="form_group">
                                     <span class="dd">邮&#x3000;箱：</span>
                                     <span >${user.email}</span>
+                                    <input type="hidden"  name="email" value="${user.email}">
+                                    <input type="hidden"  name="password" value="${user.password}">
                                 </div>
                                 <div class="form_group">
                                     <span class="dd">所在地：</span>

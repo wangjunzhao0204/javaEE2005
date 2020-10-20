@@ -50,4 +50,15 @@ public class Speaker {
     public void setSpeakerDesc(String speakerDesc) {
         this.speakerDesc = speakerDesc == null ? null : speakerDesc.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Speaker{" +
+                "id=" + id +
+                ", speakerName='" + speakerName + '\'' +
+                ", speakerJob='" + speakerJob + '\'' +
+                ", headImgUrl='" + headImgUrl + '\'' +
+                ", speakerDesc='" + speakerDesc + '\'' +
+                '}';
+    }
 }

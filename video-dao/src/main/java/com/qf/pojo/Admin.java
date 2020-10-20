@@ -40,4 +40,14 @@ public class Admin {
     public void setRoles(String roles) {
         this.roles = roles == null ? null : roles.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", roles='" + roles + '\'' +
+                '}';
+    }
 }

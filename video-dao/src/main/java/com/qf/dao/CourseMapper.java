@@ -33,4 +33,6 @@ public interface CourseMapper {
     int updateByPrimaryKeyWithBLOBs(Course record);
 
     int updateByPrimaryKey(Course record);
+
+    Course findCourseById(Integer courseId);
 }

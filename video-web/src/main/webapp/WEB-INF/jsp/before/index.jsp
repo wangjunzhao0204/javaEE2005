@@ -48,7 +48,7 @@
         <div id="userBlock" style="display:none;float:right">
 
             <a href="javascript:;" id="loginout">退出</a>
-            <a href="user/showMyProfile" id="account">${sessionScope.userAccount}</a>
+            <a href="${pageContext.request.contextPath}/user/showMyProfile" id="account">${sessionScope.userAccount}</a>
         </div>
 
         <a onclick="JavaScript:addFavorite2()"><img src="${pageContext.request.contextPath}/img/sc.png"
@@ -65,7 +65,7 @@
              onclick="location.href='${pageContext.request.contextPath}'" draggable="false">
         <ul class="text_13 f_right">
             <li>
-                <a href="#" target="_blank">首页</a>
+                <a href="${pageContext.request.contextPath}" target="_blank">首页</a>
             </li>
             <li class="nav_down">
                 高端课程<img src="${pageContext.request.contextPath}/img/nav_down.png" alt="" draggable="false">

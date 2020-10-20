@@ -1,5 +1,7 @@
 package com.qf.pojo;
 
+import java.util.List;
+
 public class Course {
     private Integer id;
 
@@ -8,6 +10,16 @@ public class Course {
     private Integer subjectId;
 
     private String courseDesc;
+
+    private List<Video> videoList;
+
+    public List<Video> getVideoList() {
+        return videoList;
+    }
+
+    public void setVideoList(List<Video> videoList) {
+        this.videoList = videoList;
+    }
 
     public Integer getId() {
         return id;
@@ -39,5 +51,16 @@ public class Course {
 
     public void setCourseDesc(String courseDesc) {
         this.courseDesc = courseDesc == null ? null : courseDesc.trim();
+    }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "id=" + id +
+                ", courseTitle='" + courseTitle + '\'' +
+                ", subjectId=" + subjectId +
+                ", courseDesc='" + courseDesc + '\'' +
+                ", videoList=" + videoList +
+                '}';
     }
 }

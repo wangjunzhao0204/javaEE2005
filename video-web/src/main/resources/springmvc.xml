@@ -23,7 +23,7 @@
     <!-- 视图解析器 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <!-- 设置前后缀 -->
-        <property name="prefix" value="/WEB-INF/jsp"></property>
+        <property name="prefix" value="/WEB-INF/jsp/"></property>
         <property name="suffix" value=""></property>
     </bean>
 
