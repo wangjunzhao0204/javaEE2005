@@ -1,5 +1,6 @@
 package com.qf.dao;
 
+import com.qf.pojo.QueryVo;
 import com.qf.pojo.Video;
 import com.qf.pojo.VideoExample;
 import java.util.List;
@@ -35,4 +36,8 @@ public interface VideoMapper {
     int updateByPrimaryKey(Video record);
 
     Video findByVideoId(Integer videoId);
+
+    Integer getTotalCount();
+
+    List<Video> findAllVideo(QueryVo queryVo);
 }

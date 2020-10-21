@@ -2,6 +2,7 @@ package com.qf.controller;
 
 import com.qf.pojo.User;
 import com.qf.service.UserService;
+import com.qf.utills.MailUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,7 +24,7 @@ public class UserController {
     @RequestMapping("loginUser")
     @ResponseBody
     public String loginUser(String email, String password, HttpSession session, Model model) {
-
+        // 登录
         User user = userService.findByEmail(email);
         model.addAttribute("email", email);
         if (user != null) {
@@ -40,7 +41,7 @@ public class UserController {
     @RequestMapping("insertUser")
     @ResponseBody
     public String insertUser(User user, HttpSession session) {
-
+        // 注册
         userService.insertUser(user);
         String email = user.getEmail();
         session.setAttribute("userAccount", email);
@@ -50,6 +51,7 @@ public class UserController {
     @RequestMapping("validateEmail")
     @ResponseBody
     public String validateEmail(String email) {
+        // 邮箱验证
         User user = userService.findByEmail(email);
 
         if (user != null) {
@@ -61,6 +63,7 @@ public class UserController {
 
     @RequestMapping("forgetPassword")
     public String forgetPassword(String email, Model model) {
+        // 忘记密码
         model.addAttribute("email", email);
 
         return "before/forget_password.jsp";
@@ -68,23 +71,45 @@ public class UserController {
 
     @RequestMapping("sendEmail")
     @ResponseBody
-    public String sendEmail(String email) {
+    public String sendEmail(String email, HttpSession session) {
+        // 发送邮箱
         User user = userService.findByEmail(email);
         if (user != null) {
+            String validateCode = MailUtils.getValidateCode(6);
+            session.setAttribute("validateCode", validateCode);
+            MailUtils.sendMail("1136257395@qq.com", "你好，这是一封测试邮件，无需回复。", "测试邮件随机生成的验证码是：" + validateCode);
             return "success";
+        } else {
+            return "hasNoUser";
         }
-
-        return "hasNoUser";
     }
 
     @RequestMapping("validateEmailCode")
-    public String validateEmailCode() {
+    public String validateEmailCode(String email, String code, HttpSession session, Model model) {
+        // 验证码
+        String validateCode = (String) session.getAttribute("validateCode");
+        if (validateCode.equals(code)) {
+            model.addAttribute("email", email);
+            return "before/reset_password.jsp";
+        } else {
+            return "before/forget_password.jsp";
+        }
+    }
 
-        return "before/index.jsp";
+    @RequestMapping("resetPassword")
+    public String resetPassword(String email, String password, HttpSession session) {
+        // 重置密码
+        session.removeAttribute("validateCode");
+        User user = userService.findByEmail(email);
+        user.setPassword(password);
+        userService.updateUser(user);
+
+        return "redirect:/subject/selectAll";
     }
 
     @RequestMapping("showMyProfile")
     public String showMyProfile(HttpSession session, Model model) {
+        // 个人中心
         User user = getUser(session);
 
         model.addAttribute("user", user);
@@ -93,20 +118,15 @@ public class UserController {
 
     @RequestMapping("loginOut")
     public String loginOut(HttpSession session) {
+        // 退出
         session.removeAttribute("userAccount");
 
-        return "before/index.jsp";
-    }
-
-    @RequestMapping("loginOut2")
-    public String loginOut2(HttpSession session) {
-        session.removeAttribute("userAccount");
-
-        return "before/index.jsp";
+        return "redirect:/subject/selectAll";
     }
 
     @RequestMapping("changeProfile")
     public String changeProfile(HttpSession session, Model model) {
+        // 修改资料
         User user = getUser(session);
 
         model.addAttribute("user", user);
@@ -115,6 +135,7 @@ public class UserController {
 
     @RequestMapping("updateUser")
     public String updateUser(User user, Model model) {
+        // 修改资料
         userService.updateUser(user);
         model.addAttribute("user", user);
         return "redirect:showMyProfile";
@@ -122,13 +143,14 @@ public class UserController {
 
     @RequestMapping("passwordSafe")
     public String passwordSafe() {
-
+        // 密码安全
         return "before/password_safe.jsp";
     }
 
     @RequestMapping("validatePassword")
     @ResponseBody
     public String validatePassword(String password, HttpSession session) {
+        // 验证原密码与新密码
         User user = getUser(session);
         if (password.equals(user.getPassword())) {
             return "success";
@@ -139,6 +161,7 @@ public class UserController {
 
     @RequestMapping("updatePassword")
     public String updatePassword(HttpSession session, String newPassword, Model model) {
+        // 修改密码
         User user = getUser(session);
         user.setPassword(newPassword);
 
@@ -149,6 +172,7 @@ public class UserController {
 
     @RequestMapping("changeAvatar")
     public String changeAvatar(HttpSession session, Model model) {
+        // 更换头像
         User user = getUser(session);
         model.addAttribute("user", user);
         return "before/change_avatar.jsp";
@@ -156,6 +180,7 @@ public class UserController {
 
     @RequestMapping("upLoadImage")
     public String upLoadImage(MultipartFile image_file, Model model, HttpSession session) {
+        // 上传新头像
         User user = getUser(session);
         String userImgUrl = user.getImgUrl();
         String path = "F:\\server\\apache-tomcat-8.5.41\\webapps\\video\\";
@@ -182,11 +207,11 @@ public class UserController {
         return "redirect:showMyProfile";
     }
 
-    public User getUser(HttpSession session) {
+    // 获取session中的用户信息
+    private User getUser(HttpSession session) {
         String email = (String) session.getAttribute("userAccount");
-        User user = userService.findByEmail(email);
 
-        return user;
+        return userService.findByEmail(email);
     }
 
 }

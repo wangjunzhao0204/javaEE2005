@@ -11,6 +11,7 @@
         <module>video-dao</module>
         <module>video-service</module>
         <module>video-web</module>
+        <module>video-utils</module>
     </modules>
 
     <packaging>pom</packaging>
