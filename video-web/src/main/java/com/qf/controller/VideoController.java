@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
@@ -32,7 +33,7 @@ public class VideoController {
 
     @RequestMapping("showVideo")
     public String showVideo(Integer videoId, String subjectName, Model model) {
-
+        // 展示视频信息
         Video video = videoService.findByVideoId(videoId);
 
         model.addAttribute("video", video);
@@ -45,6 +46,7 @@ public class VideoController {
         return "before/section.jsp";
     }
 
+    // 视频管理
     @RequestMapping("list")
     public String videoList(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
                             @RequestParam(required = false, defaultValue = "10") Integer pageSize,
@@ -76,7 +78,7 @@ public class VideoController {
 
     @RequestMapping("addVideo")
     public String addVideo(Model model) {
-
+        // 添加视频
         List<Speaker> speakerList = speakerService.findAllSpeaker();
         model.addAttribute("speakerList", speakerList);
 
@@ -88,19 +90,43 @@ public class VideoController {
 
     @RequestMapping("edit")
     public String edit(Integer id, Model model) {
+        // 修改视频
         Video video = videoService.findByVideoId(id);
-
         model.addAttribute("video", video);
+
+        List<Speaker> speakerList = speakerService.findAllSpeaker();
+        model.addAttribute("speakerList", speakerList);
+
+        List<Course> courseList = courseService.findAllCourse();
+        model.addAttribute("courseList", courseList);
         return "behind/addVideo.jsp";
     }
 
     @RequestMapping("saveOrUpdate")
     public String saveOrUpdate(Video video) {
-
+        // 保存
         if (video.getId() != null) {
             videoService.updateVideo(video);
         } else {
             videoService.addVideo(video);
+        }
+        return "redirect:list";
+    }
+
+    @RequestMapping("videoDel")
+    @ResponseBody
+    public String videoDel(Integer id) {
+        // 删除视频
+        videoService.deleteVideo(id);
+
+        return "success";
+    }
+
+    @RequestMapping("delBatchVideos")
+    public String delBatchVideos(Integer[] ids) {
+        // 批量删除
+        for (Integer id : ids) {
+            videoService.deleteVideo(id);
         }
 
         return "redirect:list";

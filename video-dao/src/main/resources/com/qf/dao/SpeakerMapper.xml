@@ -6,10 +6,18 @@
         <result column="speaker_name" property="speakerName" jdbcType="VARCHAR"/>
         <result column="speaker_job" property="speakerJob" jdbcType="VARCHAR"/>
         <result column="head_img_url" property="headImgUrl" jdbcType="VARCHAR"/>
+        <result column="speaker_desc" property="speakerDesc" jdbcType="LONGVARCHAR"/>
     </resultMap>
+
     <resultMap id="ResultMapWithBLOBs" type="com.qf.pojo.Speaker" extends="BaseResultMap">
         <result column="speaker_desc" property="speakerDesc" jdbcType="LONGVARCHAR"/>
     </resultMap>
+
+    <select id="getTotalCount" resultType="java.lang.Integer">
+        select count(*)
+        from speaker
+    </select>
+
     <sql id="Example_Where_Clause">
         <where>
             <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -97,7 +105,8 @@
         <if test="distinct">
             distinct
         </if>
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
         from speaker
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
@@ -213,7 +222,9 @@
         set id = #{record.id,jdbcType=INTEGER},
         speaker_name = #{record.speakerName,jdbcType=VARCHAR},
         speaker_job = #{record.speakerJob,jdbcType=VARCHAR},
-        head_img_url = #{record.headImgUrl,jdbcType=VARCHAR}
+        head_img_url = #{record.headImgUrl,jdbcType=VARCHAR},
+        speaker_desc = #{record.speakerDesc,jdbcType=LONGVARCHAR}
+
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
         </if>
@@ -248,7 +259,8 @@
         update speaker
         set speaker_name = #{speakerName,jdbcType=VARCHAR},
             speaker_job  = #{speakerJob,jdbcType=VARCHAR},
-            head_img_url = #{headImgUrl,jdbcType=VARCHAR}
+            head_img_url = #{headImgUrl,jdbcType=VARCHAR},
+            speaker_desc = #{record.speakerDesc,jdbcType=LONGVARCHAR}
         where id = #{id,jdbcType=INTEGER}
     </update>
 </mapper>

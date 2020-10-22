@@ -124,6 +124,14 @@ public class UserController {
         return "redirect:/subject/selectAll";
     }
 
+    @RequestMapping("loginOut2")
+    public String loginOut2(HttpSession session) {
+        // 退出
+        session.removeAttribute("userAccount");
+
+        return "redirect:/subject/selectAll";
+    }
+
     @RequestMapping("changeProfile")
     public String changeProfile(HttpSession session, Model model) {
         // 修改资料

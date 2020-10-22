@@ -29,7 +29,7 @@
 
     <select id="findCourseById" resultMap="BaseResultMap">
         select v.id videoId, v.title, v.detail, v.time, v.video_url, v.image_url,
-               v.play_num, c.id, c.course_title, c.course_desc, s.id speakerId,
+               v.play_num, c.id, c.course_title, c.course_desc, c.subject_id, s.id speakerId,
                s.speaker_name, s.speaker_desc, s.speaker_job, s.head_img_url
         from course c
             join video v on c.id = v.course_id
@@ -127,7 +127,8 @@
         <if test="distinct">
             distinct
         </if>
-        <include refid="Base_Column_List"/>
+        <include refid="Base_Column_List"/>,
+        <include refid="Blob_Column_List"/>
         from course
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>

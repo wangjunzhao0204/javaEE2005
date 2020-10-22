@@ -15,4 +15,6 @@ public interface VideoService {
     void updateVideo(Video video);
 
     void addVideo(Video video);
+
+    void deleteVideo(Integer id);
 }

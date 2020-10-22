@@ -18,12 +18,14 @@ public class AdminController {
 
     @RequestMapping("toLogin")
     public String toLogin() {
+        // 登录
         return "behind/login.jsp";
     }
 
     @RequestMapping("login")
     @ResponseBody
     public String login(String username, String password, HttpSession session) {
+        // 管理员登录
         Admin admin = adminService.findByUsername(username);
         if (admin != null) {
             if (password.equals(admin.getPassword())) {
@@ -37,6 +39,7 @@ public class AdminController {
 
     @RequestMapping("exit")
     public String exit(HttpSession session) {
+        // 退出
         session.removeAttribute("userName");
 
         return "behind/login.jsp";

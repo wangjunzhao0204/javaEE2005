@@ -17,7 +17,8 @@ public class SubjectController {
     private SubjectService subjectService;
 
     @RequestMapping("selectAll")
-    private String selectAll(Model model) {
+    public String selectAll(Model model) {
+        // 主页
         List<Subject> subjectList = subjectService.findAllSubject();
 
         model.addAttribute("subjectList", subjectList);

@@ -45,4 +45,9 @@ public class VideoServiceImpl implements VideoService {
     public void addVideo(Video video) {
         videoMapper.insert(video);
     }
+
+    @Override
+    public void deleteVideo(Integer id) {
+        videoMapper.deleteByPrimaryKey(id);
+    }
 }

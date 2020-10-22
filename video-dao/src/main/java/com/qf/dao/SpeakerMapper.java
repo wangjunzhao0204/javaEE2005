@@ -33,4 +33,6 @@ public interface SpeakerMapper {
     int updateByPrimaryKeyWithBLOBs(Speaker record);
 
     int updateByPrimaryKey(Speaker record);
+
+    Integer getTotalCount();
 }

@@ -69,7 +69,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="${pageContext.request.contextPath}/video/list">视频管理</a></li>
                 <li class="active"><a href="${pageContext.request.contextPath}/speaker/showSpeakerList">主讲人管理</a></li>
-                <li><a href="${pageContext.request.contextPath}/showCourseList">课程管理</a></li>
+                <li><a href="${pageContext.request.contextPath}/course/showCourseList">课程管理</a></li>
 
 
             </ul>
@@ -119,7 +119,7 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${page.rows}" var="speaker" varStatus="status">
+        <c:forEach items="${page.list}" var="speaker" varStatus="status">
             <tr>
                 <td>${status.index+1}</td>
                 <td>${speaker.speakerName}</td>
@@ -140,9 +140,12 @@
 </div>
 <div class="container">
     <div class="navbar-right" style="padding-right: 17px">
-        <p:page url="${pageContext.request.contextPath}/speaker/showSpeakerList"></p:page>
+
+        <a href="${pageContext.request.contextPath}/speaker/showSpeakerList?pageNum=${page.navigateFirstPage}">首页</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="${pageContext.request.contextPath}/speaker/showSpeakerList?pageNum=${page.prePage}">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="${pageContext.request.contextPath}/speaker/showSpeakerList?pageNum=${page.nextPage}">下一页</a>&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="${pageContext.request.contextPath}/speaker/showSpeakerList?pageNum=${page.navigateLastPage}">尾页</a>
     </div>
 </div>
 </body>
-
 </html>
